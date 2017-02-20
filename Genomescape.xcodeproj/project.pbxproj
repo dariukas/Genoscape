@@ -14,6 +14,9 @@
 		868D11A21E5B1C9D008AD14B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 868D11A11E5B1C9D008AD14B /* Assets.xcassets */; };
 		868D11A51E5B1C9D008AD14B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 868D11A31E5B1C9D008AD14B /* LaunchScreen.storyboard */; };
 		868D11B01E5B1C9D008AD14B /* GenomescapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868D11AF1E5B1C9D008AD14B /* GenomescapeTests.swift */; };
+		868D11BC1E5B1E5B008AD14B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868D11BB1E5B1E5B008AD14B /* AudioToolbox.framework */; };
+		868D11C01E5B5CCC008AD14B /* GenomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868D11BF1E5B5CCC008AD14B /* GenomeModel.swift */; };
+		868D11C21E5B6197008AD14B /* GenomeMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868D11C11E5B6197008AD14B /* GenomeMusicPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		868D11AB1E5B1C9D008AD14B /* GenomescapeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GenomescapeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		868D11AF1E5B1C9D008AD14B /* GenomescapeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenomescapeTests.swift; sourceTree = "<group>"; };
 		868D11B11E5B1C9D008AD14B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		868D11BB1E5B1E5B008AD14B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		868D11BF1E5B5CCC008AD14B /* GenomeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenomeModel.swift; sourceTree = "<group>"; };
+		868D11C11E5B6197008AD14B /* GenomeMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenomeMusicPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				868D11BC1E5B1E5B008AD14B /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +71,7 @@
 				868D11961E5B1C9D008AD14B /* Genomescape */,
 				868D11AE1E5B1C9D008AD14B /* GenomescapeTests */,
 				868D11951E5B1C9D008AD14B /* Products */,
+				868D11BA1E5B1E5B008AD14B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +89,8 @@
 			children = (
 				868D11971E5B1C9D008AD14B /* AppDelegate.swift */,
 				868D11991E5B1C9D008AD14B /* ViewController.swift */,
+				868D11C11E5B6197008AD14B /* GenomeMusicPlayer.swift */,
+				868D11BF1E5B5CCC008AD14B /* GenomeModel.swift */,
 				868D119B1E5B1C9D008AD14B /* Main.storyboard */,
 				868D11A11E5B1C9D008AD14B /* Assets.xcassets */,
 				868D11A31E5B1C9D008AD14B /* LaunchScreen.storyboard */,
@@ -97,6 +107,14 @@
 				868D11B11E5B1C9D008AD14B /* Info.plist */,
 			);
 			path = GenomescapeTests;
+			sourceTree = "<group>";
+		};
+		868D11BA1E5B1E5B008AD14B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				868D11BB1E5B1E5B008AD14B /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,11 +168,13 @@
 					868D11931E5B1C9D008AD14B = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = LAYLAP53SY;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					868D11AA1E5B1C9D008AD14B = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = LAYLAP53SY;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 868D11931E5B1C9D008AD14B;
 					};
@@ -206,7 +226,9 @@
 			files = (
 				868D11A01E5B1C9D008AD14B /* Genomescape.xcdatamodeld in Sources */,
 				868D119A1E5B1C9D008AD14B /* ViewController.swift in Sources */,
+				868D11C01E5B5CCC008AD14B /* GenomeModel.swift in Sources */,
 				868D11981E5B1C9D008AD14B /* AppDelegate.swift in Sources */,
+				868D11C21E5B6197008AD14B /* GenomeMusicPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +438,7 @@
 				868D11B61E5B1C9D008AD14B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		868D11B71E5B1C9D008AD14B /* Build configuration list for PBXNativeTarget "GenomescapeTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +447,7 @@
 				868D11B91E5B1C9D008AD14B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
