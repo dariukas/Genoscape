@@ -20,8 +20,6 @@ class ViewController: UIViewController, UITableViewDataSource {
         dataTableView.register(UITableViewCell.self,
                                forCellReuseIdentifier: "DataCell")
         updateGenomeList()
-        //GenomeMusicPlayer().play()
-        GenomeModel().convert()
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,6 +30,16 @@ class ViewController: UIViewController, UITableViewDataSource {
     //Update TableView
     func updateGenomeList() {
         models = GenomeModel.getList()!
+    }
+    
+    @IBAction func play(_ sender: UIButton) {
+        
+        GenomeMusicPlayer().play(melody: models[sender.tag].notes!)
+        if (sender.title(for: .normal)=="Play") {
+            sender.setTitle("Stop", for: .normal)
+        } else {
+            sender.setTitle("Play", for: .normal)
+        }
     }
     
     @IBAction func addData(_ sender: Any) {
@@ -51,7 +59,22 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cell =
             dataTableView.dequeueReusableCell(withIdentifier: "DataCell")
         cell!.textLabel!.text = models[indexPath.row].name
+        
+        cell?.accessoryType = UITableViewCellAccessoryType.detailButton
+        cell?.accessoryView = addPlayButton(index: indexPath.row)
+        
         return cell!
+    }
+    
+    
+    func addPlayButton(index: Int) -> UIButton {
+        
+        let button:UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 35))
+        button.setTitle("Play", for: .normal)
+        button.setTitleColor(UIColor.red, for: .normal)
+        button.addTarget(self, action: Selector("play:"), for: .touchUpInside)
+        button.tag = index
+        return button
     }
 
     func alert() {

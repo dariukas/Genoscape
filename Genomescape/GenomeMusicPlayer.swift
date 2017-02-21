@@ -11,7 +11,7 @@ import AudioToolbox
 
 class GenomeMusicPlayer: NSObject {
     
-    func play(){
+    func play(melody: [(UInt8, Int)]) {
         // Creating the sequence
         var sequence:MusicSequence? = nil
         if(NewMusicSequence(&sequence)==0) {
@@ -22,7 +22,8 @@ class GenomeMusicPlayer: NSObject {
         var musicTrack = MusicSequenceNewTrack(sequence!, &track)
         
         // Adding notes
-        var time = MusicTimeStamp(1.0)
+        addNote(track: track, melody: melody)
+        /*var time = MusicTimeStamp(1.0)
         for index:UInt8 in 60...72 {
             var note = MIDINoteMessage(channel: 0,
                                        note: index,
@@ -32,7 +33,7 @@ class GenomeMusicPlayer: NSObject {
             //musicTrack =
                 MusicTrackNewMIDINoteEvent(track!, time, &note)
             time += 2
-        }
+        }*/
         
         // Creating a player
         var musicPlayer:MusicPlayer? = nil
@@ -44,14 +45,18 @@ class GenomeMusicPlayer: NSObject {
         
         MusicSequenceDisposeTrack(sequence!, track!)
     }
-
-    func addNote(track: MusicTrack?, time: Float64, index: UInt8, noteDuration: Int) {
-       // var musicTrack = MusicSequenceNewTrack(sequence!, &track)
-        var note = MIDINoteMessage(channel: 0,
-                                   note: index,
-                                   velocity: 64,
-                                   releaseVelocity: 0,
-                                   duration: Float32(noteDuration))
-        MusicTrackNewMIDINoteEvent(track!, time+Float64(noteDuration), &note)
+    
+    func addNote(track: MusicTrack?, melody: [(UInt8, Int)]) {
+        // var musicTrack = MusicSequenceNewTrack(sequence!, &track)
+        var time = MusicTimeStamp(1.0)
+        for item in melody {
+            var note = MIDINoteMessage(channel: 0,
+                                       note: item.0,
+                                       velocity: 64,
+                                       releaseVelocity: 0,
+                                       duration: Float32(item.1))
+            MusicTrackNewMIDINoteEvent(track!, time, &note)
+            time += Float64(item.1)
+        }
     }
 }

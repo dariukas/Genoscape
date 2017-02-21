@@ -13,6 +13,7 @@ class GenomeModel: NSObject {
     
     var name : String?
     var sequence : String?
+    var notes : [(UInt8, Int)]?
     
     class func getList() -> [GenomeModel]? {
         var dataArray: Array<GenomeModel> = [GenomeModel]()
@@ -22,6 +23,7 @@ class GenomeModel: NSObject {
                 let genomeModel = GenomeModel()
                 genomeModel.name = (genome.value(forKey: "name") as? String)!
                 genomeModel.sequence = (genome.value(forKey: "sequence") as? String)!
+                genomeModel.notes = convertingGenomeIntoNotes(genomeModel.sequence!)
                 dataArray.append(genomeModel)
             }
         }
@@ -58,72 +60,109 @@ class GenomeModel: NSObject {
         }
     }
     
-    enum Nucleotide : Int {
-        case C, G, A, T
-    }
-    
-    func genomeSequenceToNucleotideEnum(genomeSequence: String) -> [Nucleotide] {
-
-        var dataArray = [Nucleotide]()
-        "cgacga".uppercased().characters.forEach{
-        
-            switch $0 {
-            case "C":
-                dataArray.append(.C)
-            default:
-                true
-            }
-        }
-        return dataArray
-    }
-    
     //pagal moline mase
-    func convert() {
+    // MARK: Genome Sequence to Notes
+    class func convertingGenomeIntoNotes(_ sequence0: String) -> [(UInt8, Int)] {
         
-        let s : String = "cgacga".uppercased()
-        
-        let characters = s.characters
-        
-        var notes: [(name: String, value: String)] = []
+        var notes: [(UInt8, Int)] = []
+        let items: [(String, String)] = splittingGenomeSequence(sequence0)
+        for item in items {
+           let note = convertingGenomeTriplet(item, cases: frequencyDublets(sequence0))
+           notes.append(note)
+        }
+        return notes
+    }
+    
+    class func splittingGenomeSequence(_ sequence: String) ->  [(String, String)] {
+
+        var result: [(String, String)] = []
         var a : String = ""
-        s.characters.enumerated().forEach{
+        sequence.uppercased().characters.enumerated().forEach{
             if ($0.offset % 3 == 2) {
-                notes.append((a, String($0.element)))
+                result.append((a, String($0.element)))
                 a=""
             } else {
                 a += String($0.element)}
         }
+        return result
+    }
+    
+    class func convertingGenomeTriplet(_ triplet: (String, String), cases: [String]) -> (UInt8, Int) {
         
-        print(notes)
-        
-        
-        /*var dataArray: Array<Nucleotide> = [Nucleotide]()
-        
-        for character in characters {
-            switch character {
-            case "C":
-                dataArray.append(.C)
-            default:
-                true
+        var i : UInt8 = 60
+        for case0 in cases {
+            if (triplet.0==case0) {
+                i += 1
+                return (i, nucleotideIntoDuration(triplet.1))
             }
-            
-        }*/
+        }
+        return (0, 0)
+        /*case cases[0]:
+            return (1, nucleotideIntoDuration(value))*/
     }
     
     
-    func triples() {
-        var s : String = "gcacgagcaaasaasaas"
-        s = s.uppercased()
-        let triplets = String(s.characters.enumerated().map() {
+    class func nucleotideIntoDuration(_ nucleotide:String) -> Int {
+        
+        switch nucleotide
+        {
+        case "C":
+            return 1
+        case "G":
+            return 2
+        case "T":
+            return 3
+        case "A":
+            return 4
+        default:
+            return 0
+        }
+    }
+    
+    class func frequencyDublets(_ sequence: String) -> [String] {
+
+        let triplets = String(sequence.uppercased().characters.enumerated().map() {
             $0.offset % 3 == 0 ? [$0.element] : [$0.element, ":"]
             }.joined().dropLast()).components(separatedBy: ":")
         let filteredTriplets = triplets.enumerated().filter{$0.offset % 2 == 0}.flatMap{$0.element}
         
-        var tripletsFrequenceDic = [String: Int]()
+        var tripletsFrequenceDic=[String: Int]()
         filteredTriplets.forEach { tripletsFrequenceDic[$0] = (tripletsFrequenceDic[$0] ?? 0) + 1 }
         let tripletsFrequenceDicSorted = tripletsFrequenceDic.sorted(by: { $0.value > $1.value } )
         
-        print(tripletsFrequenceDicSorted)
+        var results=Dictionary<String, Int>()
+        for (key, value) in tripletsFrequenceDicSorted {
+            results[key]=value
+        }
+        return Array(results.keys)
+    }
+    
+    
+    // MARK: Additional Methods
+    enum Nucleotide : Int {
+        case C, G, A, T
+    }
+    
+    //the method converts the string of nucleotides to the collection of nucleotide enums
+    func genomeSequenceToNucleotideEnum(genomeSequence: String) -> [Nucleotide] {
+        
+        var dataArray = [Nucleotide]()
+        "cgacga".uppercased().characters.forEach{
+            
+            switch $0 {
+            case "C":
+                dataArray.append(.C)
+            case "G":
+                dataArray.append(.G)
+            case "A":
+                dataArray.append(.A)
+            case "T":
+                dataArray.append(.T)
+            default:
+                break
+            }
+        }
+        return dataArray
     }
     
         /*class func getList(_ completion:@escaping (_ success : Bool, _ message : String?, _ models : [AppointmentBillingModel]?) -> Void) {
